@@ -72,13 +72,13 @@ class Group extends \yii\db\ActiveRecord
             SELECT
                 `group`.*,
                 (SELECT email
-                FROM USER
+                FROM user
                 WHERE birth_date = MAX(u.birth_date) LIMIT 1) AS youngest_user,
                 (SELECT email
-                FROM USER
+                FROM user
                 WHERE birth_date = MIN(u.birth_date) LIMIT 1) AS oldest_user,
                 FLOOR(AVG(DATE_FORMAT(FROM_DAYS(DATEDIFF(NOW(), u.birth_date)), '%Y'))) AS avg_age
-                FROM USER u
+                FROM user u
                 JOIN `group` ON `group`.`id` = u.group_id
                 WHERE u.group_id IN
                     (SELECT id
